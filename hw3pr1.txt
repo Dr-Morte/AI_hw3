@@ -1,0 +1,12 @@
+/*
+//Richard Padilla III
+//722002479
+//CSCE 420
+//Due: March 26, 2018
+//hw3pr1.pl*/
+
+unicorn(X) :- forall((fd_domain_bool([Mythical,Mortal,Mammal,Horned,Magical]), fd_labeling([Mythical,Mortal,Mammal,Horned,Magical])),
+ ((Mythical #==> #\Mortal)#\/
+ (#\Mythical #==> Mortal) #/\(#\Mythical #==> Mammal)#\/
+ (#\Mortal #==> Horned) #/\ (Mammal #==> Horned)#\/ 
+ (Horned #==> Magical))).

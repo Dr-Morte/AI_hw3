@@ -1,0 +1,143 @@
+/*
+//Richard Padilla III
+//722002479
+//CSCE 420
+//Due: March 26, 2018
+//hw3pr3.pl*/
+
+
+male(george).
+male(spencer).
+male(philip).
+male(charles).
+male(mark).
+male(andrew).
+male(edward).
+male(william).
+male(harry).
+male(peter).
+male(james).
+male(mike).
+male(george_young).
+
+female(mum).
+female(kydd).
+female(elizabeth).
+female(margaret).
+female(diana).
+female(anne).
+female(sarah).
+female(sophie).
+female(beatrice).
+female(louise).
+female(zara).
+female(catherine).
+female(kate).
+female(autumn).
+female(savannah).
+female(isla).
+female(eugenie).
+
+
+
+husband(george,mum).
+husband(spencer,kydd).
+husband(philip,elizabeth).
+husband(charles,diana).
+husband(mark,anne).
+husband(andrew,sarah).
+husband(edward,sophie).
+husband(william,kate).
+husband(harry,autumn).
+husband(mike,zara).
+husband(peter,autumn).
+
+
+wife(mum,george).
+wife(kydd,spencer).
+wife(elizabeth,philip).
+wife(diana,charles).
+wife(anne,mark).
+wife(sarah,andrew).
+wife(sophie,edward).
+wife(kate,william).
+wife(autumn,peter).
+wife(zara,mike).
+
+parent(brenda,ricky).
+
+parent(mum,elizabeth).
+parent(mum,margaret).
+parent(george,elizabeth).
+parent(george,margaret).
+
+parent(spencer,diana).
+parent(kydd,diana).
+
+parent(elizabeth,charles).
+parent(elizabeth,anne).
+parent(elizabeth,andrew).
+parent(elizabeth,edward).
+parent(philip,charles).
+parent(philip,anne).
+parent(philip,andrew).
+parent(philip,edward).
+
+parent(diana,william).
+parent(diana,harry).
+parent(charles,william).
+parent(charles,harry).
+
+parent(anne,peter).
+parent(anne,zara).
+parent(mark,peter).
+parent(mark,zara).
+
+parent(andrew,beatrice).
+parent(andrew,eugenie).
+parent(sarah,beatrice).
+parent(sarah,eugenie).
+
+parent(edward,louise).
+parent(edward,james).
+parent(sophie,louise).
+parent(sophie,james).
+
+parent(william,george_young).
+parent(kate,george_young).
+
+parent(peter,savannah).
+parent(peter,isla).
+parent(autumn,savannah).
+parent(autumn,isla).
+
+
+brother(X,Y) :- parent(Z,X), parent(Z,Y),male(X), \+X==Y.
+
+sister(X,Y) :- parent(Z,X), parent(Z,Y),female(X), \+X==Y.
+
+sibling(X,Y) :- brother(X,Y); sister(X,Y).
+
+daughter(X,Y) :- parent(Y,X), female(X).
+
+son(X,Y) :- parent(Y,X), male(X).
+
+grandchild(X,Y) :- parent(Z,X), parent(Y,Z).
+
+grandparent(X,Y) :- parent(Z,Y), parent(X,Z).
+
+great_grandparent(X,Y) :- parent(Z,Y), parent(A,Z), parent(X,A).
+
+first_cousin(X,Y) :- parent(Z,Y), sibling(Z,A), parent(A,X).
+
+married(X,Y) :- husband(X,Y), wife(Y,X) ; husband(Y,X), wife(X,Y).
+
+uncle(X,Y) :- parent(Z,Y), brother(X,Z), \+X==Y; parent(Z,Y),sister(A,Z), married(X,A), \+X==Y.
+
+aunt(X,Y) :- parent(Z,Y), sister(X,Z), \+X==Y; parent(Z,Y), brother(A,Z), married(X,A), \+X==Y.
+
+brother_in_law(X,Y) :- married(Y,Z), sister(A,Z), married(A,X) ; married(Y,Z), brother(X,Z). 
+
+sister_in_law(X,Y) :- married(Y,Z), brother(A,Z), married(A,X) ; married(Y,Z), sister(X,Z).
+
+ancestor(X,Y) :- parent(X,Y) ; grandparent(X,Y) ; great_grandparent(X,Y) ; parent(Z,Y), great_grandparent(X,Z).

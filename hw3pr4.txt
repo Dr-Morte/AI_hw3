@@ -1,0 +1,26 @@
+/*
+//Richard Padilla III
+//722002479
+//CSCE 420
+//Due: March 26, 2018
+//hw3pr4.pl*/
+
+
+
+%checks to see if a list is sorted in ascending order or not.
+my_sorted([A]).
+my_sorted([A,B]) :- A =< B.
+my_sorted([Start|[Head|Tail]]) :- Start =< Head, my_sorted([Head|Tail]).
+
+%checks to see if L is a permutation of M
+
+%every element in A exists in B, and every element in B exists in A
+
+is_in([A],B) :- member(A,B).
+is_in([Start|[Head|Tail]],B) :- member(Start,B), is_in([Head|Tail],B).
+
+my_perm(X,Y) :- is_in(X,Y), is_in(Y,X).
+
+%define sort(L,M) (M is a sorted version of L) using my_perm and my_sorted
+
+my_sort(A,B) :- my_perm(A,B), my_sorted(B).
